@@ -60,13 +60,13 @@
 
         <div class="translation-box">
             <div class="box input-box">
-                <textarea id="text-from" placeholder="Matn yoki kod kiriting..."></textarea>
+                <textarea id="text-from" placeholder="Matn kiriting..."></textarea>
                 <div class="box-footer">
                     <div class="controls">
                         <button id="mic-btn" title="Ovozli kiritish"><i class="fa-solid fa-microphone"></i></button>
                         <button id="clear-btn" title="Tozalash"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <span id="char-counter">Belgilar: 0</span>
+                    <span id="char-counter" data-i18n="char-counter">Belgilar: 0</span>
                 </div>
             </div>
 
@@ -86,7 +86,8 @@
     <div id="settings-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fa-solid fa-sliders"></i> Sozlamalar va Ma'lumotlar</h2>
+                <h2><i class="fa-solid fa-sliders"></i> <span data-i18n="modal-title">Sozlamalar va Ma'lumotlar</span>
+                </h2>
                 <button id="modal-close-btn" class="close-btn">&times;</button>
             </div>
 
@@ -94,16 +95,20 @@
                 <div class="modal-section history-favorites-section">
                     <div class="sub-panel">
                         <div class="panel-header">
-                            <h3><i class="fa-solid fa-clock-rotate-left"></i> Tarix</h3>
-                            <button id="clear-history-btn" class="clear-list-btn">Tozalash</button>
+                            <h3><i class="fa-solid fa-clock-rotate-left"></i> <span
+                                    data-i18n="panel-history">Tarix</span></h3>
+                            <button id="clear-history-btn" class="clear-list-btn"
+                                data-i18n="btn-clear">Tozalash</button>
                         </div>
                         <ul id="history-list" class="saved-items-list"></ul>
                     </div>
 
                     <div class="sub-panel">
                         <div class="panel-header">
-                            <h3><i class="fa-solid fa-star"></i> Tanlanganlar</h3>
-                            <button id="clear-favorites-btn" class="clear-list-btn">Tozalash</button>
+                            <h3><i class="fa-solid fa-star"></i> <span data-i18n="panel-favorites">Tanlanganlar</span>
+                            </h3>
+                            <button id="clear-favorites-btn" class="clear-list-btn"
+                                data-i18n="btn-clear">Tozalash</button>
                         </div>
                         <ul id="favorites-list" class="saved-items-list"></ul>
                     </div>
@@ -143,7 +148,7 @@
             </div>
 
             <div class="modal-footer">
-                <button id="modal-save-close" class="modal-action-btn">YOPISH</button>
+                <button id="modal-save-close" class="modal-action-btn" data-i18n="btn-close">YOPISH</button>
             </div>
         </div>
     </div>
