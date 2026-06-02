@@ -542,23 +542,147 @@ textarea {
     background: #e6c200;
 }
 
+/* ==========================================================================
+   MOBILE & RESPONSIVE DESIGN (FAQAT TELEFON VERSIYASI UCHUN)
+   ========================================================================== */
 @media (max-width: 768px) {
+    body {
+        padding: 10px 5px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    /* TELEFONDA HEADER ELEMENTLARINI TARTIBLASH */
+    header {
+        display: flex !important;
+        flex-direction: column !important; /* Elementlar tagma-tag tushadi */
+        align-items: flex-start !important; /* Yozuv chapdan boshlanadi */
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Sarlavha yozuvi chapda qoladi */
+    header h1 {
+        font-size: 20px !important;
+        margin: 0 !important;
+        text-align: left !important;
+        width: auto !important;
+    }
+
+    /* Tugmalar boshqaruvi */
+    .header-controls {
+        display: flex !important;
+        flex-direction: column !important; /* Ichidagi elementlarni ham tagma-tag qilamiz */
+        width: 100% !important;
+        gap: 12px !important;
+        position: relative !important;
+    }
+
+    /* KUN/TUN REJIMINI TEPAGA - O'NG TOMONGA CHIQARISH */
+    #theme-toggle {
+        position: absolute !important;
+        top: -46px !important; /* Uni sarlavha (h1) bilan bir qatorga ko'taradi */
+        right: 0 !important;   /* Mutloq o'ng burchakka joylaydi */
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        border-radius: 50% !important; /* Dumaloq chiroyli ko'rinish */
+        z-index: 10 !important;
+    }
+
+    /* SOZLAMALAR TUGMASINI PASTDA O'NG VA CHAPGA TO'LIQ CHO'ZISH */
+    #settings-btn {
+        width: 100% !important; /* To'liq ekran kengligida cho'ziladi */
+        max-width: none !important;
+        padding: 12px !important;
+        font-size: 15px !important;
+        justify-content: center !important; /* Matn o'rtada turadi */
+        border-radius: 10px !important;
+        margin-top: 0 !important;
+    }
+
+    /* RASM VA HUJJAT TUGMALARINI HAM TO'LIQ CHO'ZISH */
+    advanced-tools {
+        display: flex !important;
+        flex-direction: row !important; /* Tagma-tag emas, yonma-yon qatorda turadi */
+        gap: 10px !important;           /* Orasidagi masofa */
+        width: 100% !important;
+    }
+
+    .file-label {
+        flex: 1 !important;             /* Ikkala tugma ham ekranni teng yarimdan bo'lishib oladi */
+        padding: 12px !important;
+        font-size: 15px !important;
+        justify-content: center !important; 
+        border-radius: 10px !important;
+    }
+
+    /* TILLAR PANELI (DROPDOWNLAR) */
     .languages-bar {
-        flex-direction: column;
-        gap: 10px;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        grid-template-columns: none !important;
+    }
+
+    .custom-dropdown {
+        flex: 1 !important;
+        width: auto !important;
+    }
+
+    .drop-btn {
+        width: 100% !important;
+        padding: 12px 6px !important;
+        font-size: 14px !important;
+        text-align: center !important;
+        justify-content: center !important;
     }
 
     #swap-langs {
-        transform: rotate(90deg);
-        margin: 5px 0;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
     }
 
+    .drop-menu {
+        position: fixed !important;
+        top: 20% !important;
+        left: 5% !important;
+        right: 5% !important;
+        width: 90% !important;
+        max-height: 55vh !important;
+        z-index: 9999 !important;
+    }
+
+    /* MATN MAYDONLARI */
     .translation-box {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: column !important;
+        gap: 15px !important;
     }
 
-    textarea {
-        height: 250px;
+    .box textarea {
+        height: 160px !important;
+    }
+
+    /* MODAL OYNALAR */
+    .modal-content {
+        width: 95% !important;
+    }
+
+    .history-favorites-section {
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+    
+    .creator-name {
+        font-size: 28px !important;
     }
 }
