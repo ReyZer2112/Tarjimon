@@ -6,7 +6,7 @@
 
 ## ✨ Asosiy Imkoniyatlar
 
-* 📝 **Mukammal Tarjima** — Katta hajmdagi matnlarni hamda murakkab dasturlash kodlarini (`HTML`, `CSS`, `JS`, `JSON`) sintaktik buzilishlarsiz, ideal holatda o'giradi!
+* 📝 **Mukammal Tarjima** — Katta hajmdagi matnlarni hamda murakkab dasturlash kodlarini (`HTML`, `CSS`, `JS`, `JSON`) sintaktik buzilishlarsiz, ideal holatda tarjima qiladi!
 * 🔍 **Smart OCR (Rasm tahlili)** — Istalgan rasmdagi matnlarni *Tesseract AI* sun'iy intellekti yordamida soniyalar ichida skanerlab, matnga aylantiradi!
 * 📄 **Sakrauvchi Hujjatlar** — `.txt`, `.docx`, `.pdf` va boshqa ko'plab formatdagi hujjatlarni to'g'ridan-to'g'ri tizimga yuklab, vaqtingizni tejang!
 * 🔊 **Ovozli Integratsiya** — Kuchli mikrofon tizimi orqali gapirgan gaplaringizni matnga yozadi va professional audio-kolonka yordamida to'g'ri talaffuzda o'qib beradi!
