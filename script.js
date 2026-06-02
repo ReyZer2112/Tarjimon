@@ -83,6 +83,8 @@ const clearFavoritesBtn = document.getElementById('clear-favorites-btn');
 let typingTimer;
 const doneTypingInterval = 500;
 
+const micBtn = document.getElementById('mic-btn');
+
 function buildDropdowns() {
     const sortedLangs = Object.entries(languagesList).sort((a, b) => a[1].localeCompare(b[1]));
     optionsFrom.innerHTML = `<li data-value="auto">🔍 Tilni aniqlash</li>`;
@@ -232,17 +234,80 @@ copyBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(textTo.value); statusMsg.innerText = "Nusxalandi!"; setTimeout(() => statusMsg.innerText = "", 1500);
 });
 
-speakBtn.addEventListener('click', () => {
-    const text = textTo.value.trim();
-    if (!text) return;
-    const shortText = text.substring(0, 200);
-    const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${currentLangTo}&client=tw-ob&q=${encodeURIComponent(shortText)}`;
-    ttsAudio.src = googleTtsUrl;
-    ttsAudio.play().catch(() => {
-        const utterance = new SpeechSynthesisUtterance(shortText);
-        utterance.lang = currentLangTo; window.speechSynthesis.speak(utterance);
+// ==========================================================================
+// MIKROFON ORQALI OVOZLI KIRITISH (SPEECH RECOGNITION)
+// ==========================================================================
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition && micBtn) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;    // Gapirish to'xtashi bilan yozish tugaydi
+    recognition.interimResults = false; // Faqat yakuniy aniq matnni oladi
+
+    micBtn.addEventListener('click', () => {
+        // Tanlangan til kodini olish
+        let currentLang = fromLang;
+        
+        if (currentLang === 'auto' || currentLang === '') {
+            recognition.lang = 'en-US'; // Avtomatik bo'lsa standart inglizcha
+        } else if (currentLang === 'uz') {
+            recognition.lang = 'uz-UZ';
+        } else if (currentLang === 'ru') {
+            recognition.lang = 'ru-RU';
+        } else {
+            recognition.lang = currentLang;
+        }
+
+        // Agar hozir yozib olayotgan bo'lsa - to'xtatadi
+        if (micBtn.classList.contains('recording')) {
+            recognition.stop();
+        } else {
+            // Aks holda yozishni boshlaydi
+            recognition.start();
+            if (statusMsg) statusMsg.innerText = "Sizni eshityapman, gapiring...";
+            micBtn.classList.add('recording');
+            micBtn.style.color = '#d93025'; // Tugma qizil rangga kiradi
+        }
     });
-});
+
+    // Ovoz matnga muvaffaqiyatli o'girilganda
+    recognition.addEventListener('result', (e) => {
+        const transcript = e.results[0][0].transcript;
+        
+        // Matn oynasiga yozish
+        textFrom.value = transcript;
+        
+        // Belgilar sonini yangilash
+        if (charCounter) {
+            charCounter.innerText = `Belgilar: ${transcript.length}`;
+        }
+        
+        // Avtomatik tarjima qilish funksiyasini ishga tushirish
+        translateText();
+    });
+
+    // Ovozli kiritish tugaganda
+    recognition.addEventListener('end', () => {
+        micBtn.classList.remove('recording');
+        micBtn.style.color = ''; // Eski holatiga qaytadi
+        if (statusMsg) statusMsg.innerText = "";
+    });
+
+    // Xatolik yuz berganda
+    recognition.addEventListener('error', (e) => {
+        console.error("Ovoz tanishda xatolik:", e.error);
+        if (statusMsg) statusMsg.innerText = "Ovozni eshitib bo'lmadi.";
+        micBtn.classList.remove('recording');
+        micBtn.style.color = '';
+        setTimeout(() => { if(statusMsg) statusMsg.innerText = ""; }, 2000);
+    });
+
+} else if (micBtn) {
+    // Agar brauzer qo'llab-quvvatlamasa
+    micBtn.addEventListener('click', () => {
+        alert("Kechirasiz, brauzeringiz ovozli kiritishni qo'llab-quvvatlamaydi. Google Chrome'dan foydalaning.");
+    });
+}
 
 themeToggle.addEventListener('click', () => {
     if (document.body.getAttribute('data-theme') === 'dark') {
