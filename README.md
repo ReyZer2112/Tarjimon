@@ -1,4 +1,4 @@
-# 🚀 Professional Tarjimon — Ultra Edition v3.0
+# 🚀 Professional Tarjimon
 
 > 🧠 **Shunchaki oddiy til o'giruvchi dastur emas, balki 195 dan ortiq tillarni bir zumda tahlil qiluvchi va yuqori aniqlikda ishlovchi intellektual ekotizimdir!**
 
