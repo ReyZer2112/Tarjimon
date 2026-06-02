@@ -39,7 +39,7 @@ const languagesList = {
     "ty": "Taiticha", "ve": "Venda tili", "vo": "Volapyuk", "wa": "Valloncha", "wo": "Volof tili",
     "za": "Chjuan tili", "bho": "Bxojpuri tili", "doi": "Dogri tili", "kok": "Konkani tili",
     "mai": "Maithili tili", "lus": "Mizo tili", "tum": "Tumbukacha", "sat": "Santyali tili",
-    "rom":  "Sinti-romani (Lo'licha)", "en-ca": "Kanada tili (Inglizcha)",
+    "rom": "Sinti-romani (Lo'licha)", "en-ca": "Kanada tili (Inglizcha)",
     "fr-ca": "Kanada tili (Fransuzcha)",
     "pt-br": "Braziliya tili (Portugalcha)"
 };
@@ -106,7 +106,7 @@ function attachDropdownEvents() {
             dropMenuFrom.classList.remove('show');
             searchFrom.value = '';
             filterList(searchFrom, optionsFrom);
-            if(textFrom.value.trim()) translateText();
+            if (textFrom.value.trim()) translateText();
         }
     });
     optionsTo.addEventListener('click', (e) => {
@@ -116,7 +116,11 @@ function attachDropdownEvents() {
             dropMenuTo.classList.remove('show');
             searchTo.value = '';
             filterList(searchTo, optionsTo);
-            if(textFrom.value.trim()) translateText();
+
+            // MANA SHU QATOR SAYTNI TARJIMA QILADI
+            translateWebsiteUI(currentLangTo);
+
+            if (textFrom.value.trim()) translateText();
         }
     });
 }
@@ -169,7 +173,7 @@ async function translateText() {
             const data = await response.json();
             if (data && data[0]) {
                 data[0].forEach(sentence => {
-                    if(sentence[0]) finalResult += sentence[0];
+                    if (sentence[0]) finalResult += sentence[0];
                 });
             }
         }
@@ -184,11 +188,11 @@ async function translateText() {
 }
 
 swapBtn.addEventListener('click', () => {
-    if(currentLangFrom === 'auto') return;
+    if (currentLangFrom === 'auto') return;
     const tempCode = currentLangFrom; currentLangFrom = currentLangTo; currentLangTo = tempCode;
     const tempTextBtn = dropBtnFrom.innerText; dropBtnFrom.innerText = dropBtnTo.innerText; dropBtnTo.innerText = tempTextBtn;
     const tempText = textFrom.value; textFrom.value = textTo.value; textTo.value = tempText;
-    if(textFrom.value.trim()) translateText();
+    if (textFrom.value.trim()) translateText();
 });
 
 imageInput.addEventListener('change', (e) => {
@@ -197,7 +201,7 @@ imageInput.addEventListener('change', (e) => {
     statusMsg.innerText = "Rasm tahlil qilinmoqda...";
     let ocrLang = currentLangFrom === 'auto' ? 'eng' : (currentLangFrom === 'uz' ? 'uzb' : (currentLangFrom === 'ru' ? 'rus' : 'eng'));
     Tesseract.recognize(file, ocrLang).then(({ data: { text } }) => {
-        if(text.trim()) {
+        if (text.trim()) {
             textFrom.value = text;
             charCounter.innerText = `Belgilar: ${text.length}`;
             translateText();
@@ -255,7 +259,7 @@ let favorites = JSON.parse(localStorage.getItem('p_favorites')) || [];
 settingsBtn.addEventListener('click', () => { settingsModal.classList.add('open'); renderLists(); });
 modalCloseBtn.addEventListener('click', () => settingsModal.classList.remove('open'));
 modalSaveClose.addEventListener('click', () => settingsModal.classList.remove('open'));
-window.addEventListener('click', (e) => { if(e.target === settingsModal) settingsModal.classList.remove('open'); });
+window.addEventListener('click', (e) => { if (e.target === settingsModal) settingsModal.classList.remove('open'); });
 
 function saveToHistory(fromText, toText) {
     if (!fromText || !toText) return;
@@ -286,8 +290,8 @@ saveBtn.addEventListener('click', () => {
     }
 });
 
-window.deleteHistoryItem = function(index) { history.splice(index, 1); localStorage.setItem('p_history', JSON.stringify(history)); renderLists(); };
-window.deleteFavoriteItem = function(index) { favorites.splice(index, 1); localStorage.setItem('p_favorites', JSON.stringify(favorites)); renderLists(); };
+window.deleteHistoryItem = function (index) { history.splice(index, 1); localStorage.setItem('p_history', JSON.stringify(history)); renderLists(); };
+window.deleteFavoriteItem = function (index) { favorites.splice(index, 1); localStorage.setItem('p_favorites', JSON.stringify(favorites)); renderLists(); };
 clearHistoryBtn.addEventListener('click', () => { if (confirm("Tarixni o'chirish?")) { history = []; localStorage.removeItem('p_history'); renderLists(); } });
 clearFavoritesBtn.addEventListener('click', () => { if (confirm("Tanlanganlarni o'chirish?")) { favorites = []; localStorage.removeItem('p_favorites'); renderLists(); } });
 
@@ -295,5 +299,72 @@ function renderLists() {
     historyList.innerHTML = history.map((item, index) => `<li><span>${item}</span><button class="delete-item-btn" onclick="deleteHistoryItem(${index})"><i class="fa-solid fa-xmark"></i></button></li>`).join('');
     favoritesList.innerHTML = favorites.map((item, index) => `<li><span>${item}</span><button class="delete-item-btn" onclick="deleteFavoriteItem(${index})"><i class="fa-solid fa-xmark"></i></button></li>`).join('');
 }
+
+// ==========================================================================
+// SAYT INTERFEYSINI TARJIMA QILISH TIZIMI (i18n)
+// ==========================================================================
+
+const uiTranslations = {
+    "uz": {
+        "app-title": "Professional Tarjimon",
+        "settings-btn": "Sozlamalar",
+        "btn-image": "Rasm",
+        "btn-doc": "Hujjat",
+        "placeholder-from": "Matn yoki kod kiriting...",
+        "placeholder-to": "Tarjima natijasi..."
+    },
+    "en": {
+        "app-title": "Professional Translator",
+        "settings-btn": "Settings",
+        "btn-image": "Image",
+        "btn-doc": "Document",
+        "placeholder-from": "Enter text or code...",
+        "placeholder-to": "Translation result..."
+    },
+    "ru": {
+        "app-title": "Профессиональный Переводчик",
+        "settings-btn": "Настройки",
+        "btn-image": "Изображение",
+        "btn-doc": "Документ",
+        "placeholder-from": "Введите текст или код...",
+        "placeholder-to": "Результат перевода..."
+    }
+};
+
+function translateWebsiteUI(langCode) {
+    // Agar tanlangan til uchun tarjima bazada bo'lmasa, standart inglizchaga o'tkazadi
+    const lang = uiTranslations[langCode] || uiTranslations["en"];
+
+    // data-i18n atributi bor barcha matnlarni almashtirish
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (lang[key]) {
+            // Agar ichida ikona bo'lsa saqlab qolish uchun faqat matn qismini yangilaymiz
+            const icon = element.querySelector('i');
+            if (icon) {
+                element.innerHTML = '';
+                element.appendChild(icon);
+                element.innerHTML += ' ' + lang[key];
+            } else {
+                element.innerText = lang[key];
+            }
+        }
+    });
+
+    // Textarea placheholderlarini yangilash
+    const inputTextArea = document.getElementById('text-from');
+    const outputTextArea = document.getElementById('text-to');
+
+    if (inputTextArea && lang["placeholder-from"]) {
+        inputTextArea.setAttribute('placeholder', lang["placeholder-from"]);
+    }
+    if (outputTextArea && lang["placeholder-to"]) {
+        outputTextArea.setAttribute('placeholder', lang["placeholder-to"]);
+    }
+}
+
+// Mavjud dropdown hodisasiga integratsiya qilish:
+// script.js ichidagi optionsTo.addEventListener('click', ...) qismini topib, 
+// uning ichiga translateWebsiteUI(currentLangTo); qatorini qo'shib qo'yamiz.
 
 buildDropdowns();
